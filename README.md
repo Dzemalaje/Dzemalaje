@@ -1,0 +1,4 @@
+- 👋 Hi, I’m @Dzemalaje
+- 👀 I’m interested in ... Mobile Software Development
+- 🌱 I’m currently learning ... Flutter
+- 📫 How to reach me ... @dzemalhumic@gmail.com
