@@ -7,6 +7,9 @@ const TESTS := [
 	"res://tests/test_match_finder.gd",
 	"res://tests/test_board_resolver.gd",
 	"res://tests/test_obstacles.gd",
+	"res://tests/test_bosses.gd",
+	"res://tests/test_upgrades.gd",
+	"res://tests/test_run_sim.gd",
 ]
 
 
