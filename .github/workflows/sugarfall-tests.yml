@@ -1,0 +1,40 @@
+name: Sugarfall tests
+
+on:
+  push:
+    paths:
+      - "sugarfall/**"
+      - ".github/workflows/sugarfall-tests.yml"
+  pull_request:
+    paths:
+      - "sugarfall/**"
+      - ".github/workflows/sugarfall-tests.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Godot 4.3
+        run: |
+          curl -sSL -o godot.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.3-stable_linux.x86_64 godot
+          chmod +x godot
+
+      - name: Import project
+        run: ./godot --headless --path sugarfall --import
+
+      - name: Unit and simulation tests
+        run: |
+          ./godot --headless --path sugarfall -s res://tests/test_runner.gd 2>&1 | tee tests.log
+          ! grep -q "SCRIPT ERROR" tests.log
+
+      - name: Main scene smoke test
+        run: |
+          ./godot --headless --path sugarfall -s res://tests/smoke_main.gd 2>&1 | tee smoke.log
+          ! grep -q "SCRIPT ERROR" smoke.log
